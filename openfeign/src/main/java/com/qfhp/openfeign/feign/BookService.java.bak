@@ -1,0 +1,20 @@
+package com.qfhp.openfeign.feign;
+
+import com.qfhp.service.Book;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.*;
+
+@FeignClient(value = "storage")
+public interface BookService {
+    @GetMapping("/book/")
+    Book getBook(@RequestParam("id") Integer id);
+
+    @PostMapping("/book/")
+    Book addBook(@RequestBody Book book);
+
+    @PutMapping("/book/")
+    void putBook(@RequestBody Book book);
+
+    @DeleteMapping("/book/{id}")
+    void deleteBook(@PathVariable("id") Integer id);
+}

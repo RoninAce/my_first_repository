@@ -1,0 +1,24 @@
+server:
+  port: 5000
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:1111/eureka
+spring:
+  cloud:
+    gateway:
+      enabled: true
+      routes:
+        - id: storage
+          uri: lb://storage
+          predicates:
+            - Path=/s/**
+        - id: myroute
+          uri: http://httpbin.org
+          predicates:
+            - Path=/get
+  application:
+    name: gateway
+logging:
+  level:
+    org.springframework.cloud.gateway: debug
