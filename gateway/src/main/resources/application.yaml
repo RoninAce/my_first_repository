@@ -5,6 +5,8 @@ eureka:
     service-url:
       defaultZone: http://localhost:1111/eureka
 spring:
+  application:
+    name: gateway
   cloud:
     gateway:
       enabled: true
@@ -13,12 +15,15 @@ spring:
           uri: lb://storage
           predicates:
             - Path=/s/**
+          filters:
+            - StripPrefix=1
         - id: myroute
-          uri: http://httpbin.org
+          uri: http://httpbin.org/
           predicates:
             - Path=/get
-  application:
-    name: gateway
+    discovery:
+      enabled: true
+
 logging:
   level:
     org.springframework.cloud.gateway: debug
